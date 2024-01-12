@@ -1,4 +1,4 @@
-"""not Safe Exam Addon (nSEA).
+"""(not) Safe Exam Addon - nSEA.
 
 Its goal is to provide access
 to Safe Exam Browser (SEB) exams
@@ -8,11 +8,11 @@ Official SEB documentation:
 https://safeexambrowser.org/developer/seb-config-key.html
 """
 
+import argparse
 import json
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
 from hashlib import sha256
-import argparse
 
 
 # Transforms SEB XML config file to a
