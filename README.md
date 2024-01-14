@@ -6,7 +6,7 @@
 
 nSEA is a script which provides the assets needed to access [Safe Exam
 Browser (SEB)](https://safeexambrowser.org) exams without SEB, through
-an usual browser.
+a standard browser.
 
 Features:
 
@@ -17,7 +17,7 @@ Features:
 ## Why
 
 SEB isn't available for GNU/Linux. Linux students, whenever an exam is
-taken, have to connect through school computers with Windows.
+taken, must connect via the school's Windows computers.
 
 ## How
 
@@ -30,7 +30,7 @@ $ python ./nsea.py [-h] config_file
 `config_file` is the XML `config.seb` file you can get from the exam
 webpage, the one telling you that you are not using SEB.
 
-Once the script finished, you will get a HTTP key-value header:
+Once the script is finished, you will get a HTTP key-value header:
 
     X-SafeExamBrowser-ConfigKeyHash: 6eb3652038ec372a2f2ec0c374e2cbf2c924e9b5d5aade177e7cef57f0598580
 

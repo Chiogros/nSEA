@@ -26,9 +26,9 @@ def sebxml2dict(xml: ET.ElementTree) -> dict:
     # once the value is fetched.
     key_text = ""
 
-    # SEB config file is akwardingly set up.
-    # XML tags hierarchy isn't recognized, all appear at
-    # the root level.
+    # SEB config file is strangely set up.
+    # XML tags hierarchy isn't recognized and
+    # all tags are set at the root level.
     for elem in xml.iter():
         # A key-value pair is found.
         if elem.tag == "key":
