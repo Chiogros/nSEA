@@ -10,7 +10,7 @@ an usual browser.
 
 Features:
 
-- [x] Unencrypted Config Key (password-less exam)
+- [x] Unencrypted Config Key
 - [ ] Encrypted Config Key
 - [ ] Browser Exam Key
 
