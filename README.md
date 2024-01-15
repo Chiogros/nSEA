@@ -43,6 +43,10 @@ for
 and
 [Chrome](https://chrome.google.com/webstore/detail/simple-modify-headers/gjgiipmpldkpbdfjkgofildhapegmmic).
 
+## Resources
+
+[Developer documentation - Config key](https://safeexambrowser.org/developer/seb-config-key.html)
+
 ## Nota bene
 
 This project is for educational purposes and must not be used without

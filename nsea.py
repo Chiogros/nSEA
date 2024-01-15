@@ -107,11 +107,12 @@ def seb_hash_from_config(filename: str) -> None:
 # Handle script arguments.
 # e.g.: get the SEB config filename
 def parse_args() -> dict:
-    description = "Provide the HTTP header needed to access Safe Exam Browser (SEB) exams."
-    epilog = "Once you get the header, resend a request to the exam page through your usual browser. Then, refresh the page to gain access to the exam Start button."
+    description = """Provide the HTTP header needed to access Safe Exam Browser (SEB) exams.
+See the README to learn more."""
+    config_file_help = "SEB config file you can get from the exam webpage."
 
-    parser = argparse.ArgumentParser(description=description, epilog=epilog)
-    parser.add_argument("config_file", help="SEB config file you can get from the exam webpage.")
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument("config_file", help=config_file_help)
 
     return vars(parser.parse_args())
 
