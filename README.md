@@ -8,7 +8,7 @@ nSEA is a script which provides the assets needed to access [Safe Exam
 Browser (SEB)](https://safeexambrowser.org) exams without SEB, through
 a standard browser.
 
-Supported levels of security:
+Supported levels of security ([help to support other levels](https://github.com/Chiogros/nSEA/commit/c5bd821b6b75951f2ce2da49fc90260080e78cd6#commitcomment-177323657)):
 - [x] Unencrypted Config Key
 - [ ] Encrypted Config Key
 - [ ] Browser Exam Key
