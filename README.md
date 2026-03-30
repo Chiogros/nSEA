@@ -51,3 +51,4 @@ and
 This project is for educational purposes and must not be used without
 permission. I do not guarantee that it will work and I am not
 responsible for anything that may happen to you.
+Aymeri38 is now co founder of this project
