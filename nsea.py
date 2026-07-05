@@ -51,7 +51,12 @@ def decrypt_password(data: bytes) -> bytes:
 
     # As AES-CBC pads data to make blocks, padding bytes must be removed
     unpadder: PaddingContext = padding.PKCS7(128).unpadder()
-    dec_data_gz_unpadded: bytes = unpadder.update(dec_data_gz) + unpadder.finalize()
+    dec_data_gz_unpadded: bytes = bytes()
+    try:
+        dec_data_gz_unpadded = unpadder.update(dec_data_gz) + unpadder.finalize()
+    except ValueError:
+        print("Wrong password")
+        return bytes()
 
     config: bytes = gzip.decompress(dec_data_gz_unpadded)
     return config
@@ -130,7 +135,12 @@ See the README to learn more."""
 # usable to access SEB quizs.
 def seb_hash_from_config(filename: str) -> None:
     config: bytes = get_plain_config(filename)
-    xml: ET.ElementTree = ET.parse(config)
+    xml: ET.ElementTree
+    try:
+        xml = ET.parse(config)
+    except:
+        print("Can't parse XML. Is config file corrupted?")
+        return
 
     # Build an ordered dict from XML
     unordered_data: dict = seb_xml_to_dict(xml)
