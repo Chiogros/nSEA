@@ -25,7 +25,7 @@ $ pip3 install cryptography
 $ python3 ./nsea.py [-h] config_file.seb
 ```
 
-`config_file` is the XML `config.seb` file you can get from the exam
+`config.seb` is XML or GZIP file you can get from the exam
 webpage, the one telling you that you are not using SEB.
 
 Once the script is finished, you will get a HTTP key-value header:
