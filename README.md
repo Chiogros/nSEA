@@ -10,20 +10,20 @@ a standard browser.
 
 Supported levels of security ([help to support other levels](https://github.com/Chiogros/nSEA/commit/c5bd821b6b75951f2ce2da49fc90260080e78cd6#commitcomment-177323657)):
 - [x] Unencrypted Config Key
-- [ ] Encrypted Config Key
+- [x] Password-encrypted Config Key
+- [ ] Public key-encrypted Config Key
 - [ ] Browser Exam Key
 
 ## Why
 
-SEB isn't available for GNU/Linux. Linux students, whenever an exam is
-taken, must connect via the school's Windows computers.
+SEB isn't available for GNU/Linux.
 
 ## How
 
 It should work on any Python v3+.
 
 ``` sh
-$ python ./nsea.py [-h] config_file
+$ python ./nsea.py [-h] config_file.seb
 ```
 
 `config_file` is the XML `config.seb` file you can get from the exam
@@ -51,3 +51,4 @@ and
 This project is for educational purposes and must not be used without
 permission. I do not guarantee that it will work and I am not
 responsible for anything that may happen to you.
+
