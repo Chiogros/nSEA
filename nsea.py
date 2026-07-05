@@ -27,6 +27,7 @@ from hashlib import sha256
 
 
 def decrypt_password(data: bytes) -> bytes:
+    """Decrypt password-protected config."""
     _version: bytes = data[0:1]
     _options: bytes = data[1:2]
     salt: bytes = data[2:10]
@@ -69,6 +70,10 @@ def decrypt_password(data: bytes) -> bytes:
 
 
 def get_config_from_gzip(compressed_content: bytes) -> bytes:
+    """Get config from compressed config.
+
+    Compressed config mostly embeds encrypted data.
+    """
     config: bytes = bytes()
     plain_content: bytes = gzip.decompress(compressed_content)
     encryption_type: bytes = plain_content[0:4]
@@ -88,6 +93,7 @@ def get_config_from_gzip(compressed_content: bytes) -> bytes:
 
 
 def get_plain_config(filename: str) -> io.BytesIO:
+    """Get XML config as bytes."""
     gzip_magic: bytes = b"\x1f\x8b"
 
     with open(filename, "rb") as f:
@@ -108,24 +114,24 @@ def get_plain_config(filename: str) -> io.BytesIO:
         return io.BytesIO(config)
 
 
-# The dumped JSON data strictly needs to contain
-# neither whitespaces or newlines.
 def json_dumps_without_whitespaces(data: dict) -> str:
+    """The dumped JSON data strictly needs to contain neither whitespaces or newlines."""
     return json.dumps(data).replace(" ", "").replace("\n", "")
 
 
-# Concatenate and hash parts to get
-# the final, HTTP header hash.
 def make_http_header_hash(url: str, config_hash: str) -> str:
+    """Concatenate and hash parts to get the final, HTTP header hash."""
     hasher = sha256()
     hasher.update(url.encode("utf-8"))
     hasher.update(config_hash.encode("utf-8"))
     return hasher.hexdigest()
 
 
-# Handle script arguments.
-# e.g.: get the SEB config filename
 def parse_args() -> dict:
+    """Handle script arguments.
+
+    e.g.: get the SEB config filename
+    """
     description = """Provide the HTTP header needed to access Safe Exam Browser (SEB) exams.
 See the README to learn more."""
     config_file_help = "SEB config file you can get from the exam webpage."
@@ -136,10 +142,10 @@ See the README to learn more."""
     return vars(parser.parse_args())
 
 
-# Main function which transforms SEB XML config file in JSON
-# and hash some parts to get the final Config Key hash,
-# usable to access SEB quizs.
 def seb_hash_from_config(filename: str) -> None:
+    """Main function which transforms SEB XML config file in JSON
+    and hash some parts to get the final Config Key hash,
+    required to access SEB exams."""
     config: bytes = get_plain_config(filename)
     xml: ET.ElementTree
     try:
@@ -163,9 +169,8 @@ def seb_hash_from_config(filename: str) -> None:
     print(f"X-SafeExamBrowser-ConfigKeyHash: {config_key}")
 
 
-# Transforms SEB XML config file to a
-# dictionnary, containing corresponding key-values.
 def seb_xml_to_dict(xml: ET.ElementTree) -> dict:
+    """Transforms SEB XML config file to a dictionnary, containing corresponding key-values."""
     data = {}
     # True when a <key> has been found,
     # meaning that the next tag is a value.
@@ -202,9 +207,8 @@ def seb_xml_to_dict(xml: ET.ElementTree) -> dict:
     return data
 
 
-# The elements strictly need to be sorted
-# case insensitively.
 def sort_elements(data: dict) -> OrderedDict:
+    """The elements strictly need to be sorted case insensitively."""
     ord_data = OrderedDict()
 
     # Sorting keys by lowering them all,
