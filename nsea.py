@@ -8,6 +8,12 @@ Official SEB documentation:
 https://safeexambrowser.org/developer/seb-config-key.html
 """
 
+# /// script
+# dependencies = [
+#   "cryptography"
+# ]
+# ///
+
 import argparse
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import hashes, padding

@@ -20,10 +20,9 @@ SEB isn't available for GNU/Linux.
 
 ## How
 
-It should work on any Python v3+.
-
 ``` sh
-$ python ./nsea.py [-h] config_file.seb
+$ pip3 install cryptography
+$ python3 ./nsea.py [-h] config_file.seb
 ```
 
 `config_file` is the XML `config.seb` file you can get from the exam
@@ -51,4 +50,3 @@ and
 This project is for educational purposes and must not be used without
 permission. I do not guarantee that it will work and I am not
 responsible for anything that may happen to you.
-
