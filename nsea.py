@@ -9,6 +9,11 @@ https://safeexambrowser.org/developer/seb-config-key.html
 """
 
 import argparse
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives import hashes, padding
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+import gzip
+import io
 import json
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
@@ -83,11 +88,84 @@ def make_http_header_hash(url: str, config_hash: str) -> str:
     return hasher.hexdigest()
 
 
+def decrypt_password(data: bytes) -> bytes:
+    _version: bytes = data[0:1]
+    _options: bytes = data[1:2]
+    salt: bytes = data[2:10]
+    _hmac_salt: bytes = data[10:18]
+    iv: bytes = data[18:34]
+
+    hmac_len: int = 32
+    hmac_start: int = len(data) - hmac_len
+    enc_data: bytes = data[34:hmac_start]
+    _hmac: bytes = data[hmac_start:]
+
+    print("Config password: ", end="")
+    passphrase: bytes = bytes(input(), encoding="utf-8")
+    kdf: PBKDF2HMAC = PBKDF2HMAC(
+        # Algorithm is specified in RNCryptor spec (used by SEB)
+        algorithm=hashes.SHA1(),
+        length=32,
+        salt=salt,
+        iterations=10_000,
+    )
+    enc_key: bytes = kdf.derive(passphrase)
+
+    cipher_alg: CipherAlgorithm = algorithms.AES256(enc_key)
+    cipher_mode: Mode = modes.CBC(iv)
+    cipher: Cipher = Cipher(cipher_alg, cipher_mode)
+    decryptor: CipherContext = cipher.decryptor()
+    dec_data_gz: bytes = decryptor.update(enc_data) + decryptor.finalize()
+
+    # As AES-CBC pads data to make blocks, padding bytes must be removed
+    unpadder: PaddingContext = padding.PKCS7(128).unpadder()
+    dec_data_gz_unpadded: bytes = unpadder.update(dec_data_gz) + unpadder.finalize()
+
+    config: bytes = gzip.decompress(dec_data_gz_unpadded)
+    return config
+
+
+def get_config_from_gzip(compressed_content: bytes) -> bytes:
+    config: bytes = bytes()
+    plain_content: bytes = gzip.decompress(compressed_content)
+    encryption_type: bytes = plain_content[0:4]
+
+    match encryption_type:
+        case b"pswd":
+            config = decrypt_password(plain_content[4:])
+        case _:
+            pass
+
+    return config
+
+
+def get_plain_config(filename: str) -> io.BytesIO:
+    gzip_magic: bytes = b"\x1f\x8b"
+
+    with open(filename, "rb") as f:
+        config: bytes = bytes()
+        file_content: bytes = f.read()
+        magic: bytes = file_content[0:2]
+
+        is_gzip: bool = magic == gzip_magic
+        if is_gzip:
+            config = get_config_from_gzip(file_content)
+        else:
+            config = file_content
+
+        if is_gzip:
+            with open(filename + ".plain", "wb") as f:
+                f.write(config)
+
+        return io.BytesIO(config)
+
+
 # Main function which transforms SEB XML config file in JSON
 # and hash some parts to get the final Config Key hash,
 # usable to access SEB quizs.
 def seb_hash_from_config(filename: str) -> None:
-    xml: ET.ElementTree = ET.parse(filename)
+    config: bytes = get_plain_config(filename)
+    xml: ET.ElementTree = ET.parse(config)
 
     # Build an ordered dict from XML
     unordered_data: dict = sebxml2dict(xml)
