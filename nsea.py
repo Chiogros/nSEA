@@ -112,11 +112,11 @@ See the README to learn more."""
     config_file_help = "SEB config file you can get from the exam webpage."
 
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument("config_file", help=config_file_help)
+    parser.add_argument("config_file.seb", help=config_file_help)
 
     return vars(parser.parse_args())
 
 
 if __name__ == "__main__":
     args = parse_args()
-    seb_hash_from_config(args["config_file"])
+    seb_hash_from_config(args["config_file.seb"])
