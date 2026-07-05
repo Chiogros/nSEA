@@ -61,12 +61,17 @@ def get_config_from_gzip(compressed_content: bytes) -> bytes:
     config: bytes = bytes()
     plain_content: bytes = gzip.decompress(compressed_content)
     encryption_type: bytes = plain_content[0:4]
+    ciphered_data: bytes = plain_content[4:]
 
     match encryption_type:
+        case b"plnd":
+            config = gzip.decompress(ciphered_data)
         case b"pswd":
-            config = decrypt_password(plain_content[4:])
+            config = decrypt_password(ciphered_data)
         case _:
-            pass
+            print(
+                "Unsupported config! Please publish your config file on GitHub (https://github.com/Chiogros/nSEA/commit/c5bd821b6b75951f2ce2da49fc90260080e78cd6#commitcomment-177323657) or through email to nsea@fra.mozmail.com"
+            )
 
     return config
 
