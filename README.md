@@ -8,11 +8,14 @@ nSEA is a script which provides the assets needed to access [Safe Exam
 Browser (SEB)](https://safeexambrowser.org) exams without SEB, through
 a standard browser.
 
-Supported levels of security ([help wanted](https://github.com/Chiogros/nSEA/discussions)):
-- [x] Unencrypted Config Key (CK)
-- [x] Password-encrypted Config Key
-- [ ] Public key-encrypted Config Key
-- [ ] Server Exam Key
+Supported security levels ([help wanted](https://github.com/Chiogros/nSEA/discussions)):
+- [x] Config Key (CK)
+- [x] Compressed Config Key (PLND)
+- [x] Password-encrypted Client Configuration (PWCC)
+- [x] Password-encrypted Config Key (PSWD)
+- [ ] Public key-encrypted Config Key (PKHS)
+- [ ] Public key & Password encrypted Config Key (PHSK)
+- [ ] Server Exam Key (SEK)
 - [ ] Browser Exam Key (BEK)
 - [ ] Additional Browser Exam Key (ABEK)
 - [ ] App-Signature Key (ASK)
@@ -48,7 +51,7 @@ and
 
 [Developer documentation - Config key](https://safeexambrowser.org/developer/seb-config-key.html)
 
-## Nota bene
+## Disclaimer
 
 This project is for educational purposes (especially about software-protection mechanisms) and must not be used without
 permission. I do not guarantee that it will work and I am not responsible for any usage of this tool.
