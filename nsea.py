@@ -84,9 +84,14 @@ def get_config_from_gzip(compressed_content: bytes) -> bytes:
             config = gzip.decompress(ciphered_data)
         case b"pswd":
             config = decrypt_password(ciphered_data)
+        case b"pwcc":
+            print("[WARNING] Unstable feature!")
+            print("File contains configuration for SEB client, nothing related to exam authorization.")
+            print("Run nSEA with exam's configuration file.")
+            print("Please share this file with community for testing purposes: https://github.com/Chiogros/nSEA/discussions/4")
         case _:
             print(
-                "Unsupported config! Please publish your config file on GitHub (https://github.com/Chiogros/nSEA/commit/c5bd821b6b75951f2ce2da49fc90260080e78cd6#commitcomment-177323657) or through email to nsea@fra.mozmail.com"
+                "Unsupported config! Please publish your config file on GitHub (https://github.com/Chiogros/nSEA/discussions) or through email to nsea@fra.mozmail.com"
             )
 
     return config
