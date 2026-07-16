@@ -9,10 +9,13 @@ Browser (SEB)](https://safeexambrowser.org) exams without SEB, through
 a standard browser.
 
 Supported levels of security ([help to support other levels](https://github.com/Chiogros/nSEA/commit/c5bd821b6b75951f2ce2da49fc90260080e78cd6#commitcomment-177323657)):
-- [x] Unencrypted Config Key
+- [x] Unencrypted Config Key (CK)
 - [x] Password-encrypted Config Key
 - [ ] Public key-encrypted Config Key
-- [ ] Browser Exam Key
+- [ ] Server Exam Key
+- [ ] Browser Exam Key (BEK)
+- [ ] Additional Browser Exam Key (ABEK)
+- [ ] App-Signature Key (ASK)
 
 ## Why
 
@@ -47,6 +50,8 @@ and
 
 ## Nota bene
 
-This project is for educational purposes and must not be used without
-permission. I do not guarantee that it will work and I am not
-responsible for anything that may happen to you.
+This project is for educational purposes (especially about software-protection mechanisms) and must not be used without
+permission. I do not guarantee that it will work and I am not responsible for any usage of this tool.
+
+Dear organizations and schools, paying exam supervisors and using paper sheet/pencil are the best, IT non-hackable way to pass an exam.
+As you may have noticed, not all security mechanisms are supported. You may upgrade your exams to a greatest level!
